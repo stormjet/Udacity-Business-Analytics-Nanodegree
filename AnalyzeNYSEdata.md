@@ -1,4 +1,4 @@
-*#Project Submission
+# Project Submission
 
 
 Evaluation
