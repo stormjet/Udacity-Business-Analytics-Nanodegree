@@ -1,0 +1,40 @@
+/* Query 1 - used for first insight*/
+SELECT i.billingcountry AS country, 
+       COUNT(*) num_album
+FROM Album a
+JOIN Track t ON a.AlbumId = t.AlbumId
+JOIN InvoiceLine il ON t.TrackId = il.TrackId
+JOIN Invoice i ON il.InvoiceId = i.InvoiceId
+GROUP BY  Country
+ORDER BY num_album  DESC
+LIMIT 10;
+
+/* Query 2 - used for second insight*/
+SELECT a.Name AS artist_name,
+       sum(il.Quantity) AS Albums_sold
+FROM Artist a
+JOIN Album al ON a.ArtistId = al.ArtistId
+JOIN Track t ON al.AlbumId = t.AlbumId
+JOIN InvoiceLine il ON t.TrackId = il.TrackId
+GROUP BY artist_name
+ORDER BY albums_sold DESC
+LIMIT 10;
+
+/* Query 3 - used for third insight*/
+SELECT e.firstname ||" "|| e.LastName,
+       COUNT(i.invoiceid) number_of_sale,
+       SUM(i.total) value_of_sale
+FROM employee e
+JOIN customer c ON c.supportrepid = e.employeeid
+JOIN invoice i ON i.customerid = c.customerid
+WHERE title = 'Sales Support Agent'
+GROUP BY e.FirstName;
+
+/* Query 4 - used for fourth insight*/
+SELECT m.name AS media_type,
+       SUM(quantity) AS total_qty
+FROM mediatype m
+JOIN track t ON t.mediatypeid = m.mediatypeid
+JOIN invoiceline il ON il.trackid = t.trackid
+GROUP BY media_type
+ORDER BY total_qty DESC;
